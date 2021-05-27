@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+        <AWSProjectType>Lambda</AWSProjectType>
+        <ApplicationIcon />
+        <OutputType>Exe</OutputType>
+        <StartupObject>MailCheck.MtaSts.Poller.LocalEntryPoint</StartupObject>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Amazon.Lambda.Core" Version="1.1.0" />
+        <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="1.5.0" />
+        <PackageReference Include="DnsClient" Version="1.3.2" />
+        <PackageReference Include="Flurl.Http" Version="2.4.1" />
+        <PackageReference Include="MailCheck.Common.Messaging" Version="4.0.0" />
+        <PackageReference Include="MailCheck.Common.Api" Version="4.0.0" />
+        <PackageReference Include="MailCheck.Common.Processors" Version="4.7.3" />
+        <PackageReference Include="MailCheck.Common.Util" Version="4.0.0" />
+        <PackageReference Include="MailCheck.Common.SSM" Version="4.0.0" />
+        <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
+    </ItemGroup>
+    <ItemGroup>
+        <DotNetCliToolReference Include="Amazon.Lambda.Tools" Version="2.2.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\MailCheck.MtaSts.Contracts\MailCheck.MtaSts.Contracts.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Domain\Errors\Parser\MtaStsParserErrorMarkdown.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MtaStsParserErrorMarkdown.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\Errors\Parser\MtaStsParserErrorMessages.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MtaStsParserErrorMessages.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\Errors\Rules\MtaStsRuleErrorMessages.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MtaStsRuleErrorMessages.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Domain\Errors\Rules\MtaStsRuleMarkdown.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MtaStsRuleMarkdown.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Domain\Errors\Parser\MtaStsParserErrorMarkdown.resx">
+        <SubType>Designer</SubType>
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>MtaStsParserErrorMarkdown.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\Errors\Parser\MtaStsParserErrorMessages.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>MtaStsParserErrorMessages.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\Errors\Rules\MtaStsRuleErrorMessages.resx">
+        <SubType>Designer</SubType>
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>MtaStsRuleErrorMessages.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Domain\Errors\Rules\MtaStsRuleMarkdown.resx">
+        <SubType>Designer</SubType>
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>MtaStsRuleMarkdown.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+</Project>

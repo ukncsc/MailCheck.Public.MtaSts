@@ -1,0 +1,1 @@
+GRANT SELECT, INSERT, UPDATE, DELETE ON `mtasts_entity` TO '{env}-mtasts-ent' IDENTIFIED BY '{password}';

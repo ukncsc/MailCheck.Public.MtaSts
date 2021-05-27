@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="VersionKeyValidExplanation" xml:space="preserve">
+        <value>MTA-STS version. Currently, only STSv1 is supported.</value>
+    </data>
+    <data name="VersionKeyInvalidExplanation" xml:space="preserve">
+        <value>{0} is invalid. Currently, only STSv1 is supported for the version key.</value>
+    </data>
+    <data name="ModeKeyEnforceExplanation" xml:space="preserve">
+        <value>Enforce mode: Sending MTAs MUST NOT deliver the message to hosts that fail MX matching or certificate validation or that do not support STARTTLS.</value>
+    </data>
+    <data name="ModeKeyTestingExplanation" xml:space="preserve">
+        <value>Testing mode: Sending MTAs that also implement the TLSRPT (TLS Reporting) specification [RFC8460](https://tools.ietf.org/html/rfc8460) send a report indicating policy application failures (as long as TLSRPT is also implemented by the recipient domain); in any case, messages may be delivered as though there were no MTA-STS validation failure.</value>
+    </data>
+    <data name="ModeKeyNoneExplanation" xml:space="preserve">
+        <value>None mode: Sending MTAs should treat the Policy Domain as though it does not have any active policy.</value>
+    </data>
+    <data name="ModeKeyInvalidExplanation" xml:space="preserve">
+        <value>Invalid mode key, mode should be set to one of enforce, testing or none.</value>
+    </data>
+    <data name="MaxAgeKeyValidExplanation" xml:space="preserve">
+        <value>Max lifetime of the policy is {0} seconds.</value>
+    </data>
+    <data name="MaxAgeKeyInvalidValidExplanation" xml:space="preserve">
+        <value>'{0}' is an invalid value for max_age, please use an integer between 0 and 31557600 seconds.</value>
+    </data>
+    <data name="MxKeyValidExplanation" xml:space="preserve">
+        <value>Mail for this domain may be handled by MX {0}.</value>
+    </data>
+    <data name="MxKeyInvalidExplanation" xml:space="preserve">
+        <value>{0} is in an invalid host format.</value>
+    </data>
+</root>

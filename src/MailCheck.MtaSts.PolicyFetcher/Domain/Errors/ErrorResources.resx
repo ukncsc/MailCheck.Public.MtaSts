@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="PolicyParseError" xml:space="preserve">
+        <value>Policy File is in an incorrect format.</value>
+    </data>
+    <data name="PolicyParseErrorMarkdown" xml:space="preserve">
+        <value>Please ensure the MTA-STS policy file adheres to the format outlined in the following RFC: https://tools.ietf.org/html/rfc8461#section-3.2.</value>
+    </data>
+    <data name="KeyValueErrorMarkdown" xml:space="preserve">
+        <value>Line {1} found in policy, please ensure it adheres to the the format outlined in the following RFC: https://tools.ietf.org/html/rfc8461#section-3.2.</value>
+    </data>
+    <data name="ModeKeyErrorMarkdown" xml:space="preserve">
+        <value>The mode key must be one of "enforce", "testing", or "none".</value>
+    </data>
+    <data name="MxKeyErrorMarkdown" xml:space="preserve">
+        <value>Valid patterns can be either fully specified names ("example.com") or suffixes prefixed by a wildcard ("*.example.net"). If a policy specifies more than one MX, each MX MUST have its own "mx:" key, and each MX key/value pair MUST be on its own line in the policy file.</value>
+    </data>
+    <data name="MaxAgeKeyErrorMarkdown" xml:space="preserve">
+        <value>The max_age key must be a plaintext non-negative integer with a maximum value of 31557600.</value>
+    </data>
+    <data name="VersionKeyErrorMarkdown" xml:space="preserve">
+        <value>Only STSv1 is supported for the version key.</value>
+    </data>
+    <data name="MaxOccurrencesExceededError" xml:space="preserve">
+        <value>The {0} key should occur no more than {1}. This policy file has at least {2} occurrences.</value>
+    </data>
+    <data name="FetchTimeOutMarkdown" xml:space="preserve">
+        <value>Our HTTP client timed out fetching the policy {0}, please ensure the policy file is obtainable through this URL.</value>
+    </data>
+</root>

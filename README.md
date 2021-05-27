@@ -1,1 +1,1 @@
-# MailCheck.Public.MtaSts
+# MailCheck.MtaSts

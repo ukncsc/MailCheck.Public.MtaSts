@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Remove="Scripts\2020-12-10-1454_create_mtasts_entity_table.sql" />
+        <None Remove="Scripts\2020-12-10-1457_create_mtasts_entity_grants.sql" />
+        <None Remove="Scripts\everytime\grants.sql" />
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Scripts\2020-12-10-1454_create_mtasts_entity_table.sql" />
+        <EmbeddedResource Include="Scripts\2020-12-10-1457_create_mtasts_entity_grants.sql" />
+        <EmbeddedResource Include="Scripts\everytime\grants.sql" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MailCheck.Common.Data.Migration" Version="4.3.0" />
+    </ItemGroup>
+</Project>
