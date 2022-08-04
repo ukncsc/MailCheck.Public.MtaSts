@@ -135,4 +135,11 @@ When an enforce policy is in place for this domain, a sending email service (to 
 
 As such, you should make sure check your TLS configurations and certificates are well configured before progressing to a MTA-STS policy of enforce.</value>
   </data>
+  <data name="NoMxPresent" xml:space="preserve">
+    <value>No MX patterns were found in your policy file, you can denote these as:
+- mx: mail.example.com 
+- mx: *.example.com.
+Please see [section 3.2 of the RFC](https://datatracker.ietf.org/doc/html/rfc8461#section-3.2).
+</value>
+  </data>
 </root>

@@ -37,7 +37,7 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             Assert.AreEqual(1, result.AdvisoryMessages.Count);
 
             AdvisoryMessage advisory1 = result.AdvisoryMessages[0];
-            Assert.AreEqual(AdvisoryType.Error, advisory1.AdvisoryType);
+            Assert.AreEqual(MessageType.error, advisory1.MessageType);
             Assert.AreEqual("Please refer to SMTP MTA Strict Transport Security [RFC](https://tools.ietf.org/html/rfc8461#section-3.1)", advisory1.MarkDown);
             Assert.AreEqual("Invalid tag key", advisory1.Text);
             Assert.AreEqual(MessageDisplay.Standard, advisory1.MessageDisplay);
@@ -48,7 +48,6 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             Assert.AreEqual("testDomain.com", record.Domain);
             Assert.AreEqual(2, record.Tags.Count);
         }
-
 
         [Test]
         public async Task MalformedTagIsInvalid()
@@ -64,7 +63,7 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             Assert.AreEqual(1, result.AdvisoryMessages.Count);
 
             AdvisoryMessage advisory = result.AdvisoryMessages[0];
-            Assert.AreEqual(AdvisoryType.Error, advisory.AdvisoryType);
+            Assert.AreEqual(MessageType.error, advisory.MessageType);
             Assert.AreEqual(null, advisory.MarkDown);
             Assert.AreEqual("Malformed tag id=123v=STSv1", advisory.Text);
             Assert.AreEqual(MessageDisplay.Standard, advisory.MessageDisplay);
@@ -90,7 +89,7 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             Assert.AreEqual(1, result.AdvisoryMessages.Count);
 
             AdvisoryMessage advisory = result.AdvisoryMessages[0];
-            Assert.AreEqual(AdvisoryType.Error, advisory.AdvisoryType);
+            Assert.AreEqual(MessageType.error, advisory.MessageType);
             Assert.AreEqual(null, advisory.MarkDown);
             Assert.AreEqual("The v tagKey should occur no more than 1. This record has at least 1 occurrences.", advisory.Text);
             Assert.AreEqual(MessageDisplay.Standard, advisory.MessageDisplay);
@@ -100,33 +99,6 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             MtaStsRecord record = result.MtaStsRecords.Records[0];
             Assert.AreEqual("testDomain.com", record.Domain);
             Assert.AreEqual(2, record.Tags.Count);
-        }
-
-        [Test]
-        public async Task EmptyRecord()
-        {
-            string expectedMarkDown =
-                "Mail Transfer Agent Strict Transport Security (MTA-STS) is a protocol that allows a domain to advertise the capability to receive emails using Transport Layer Security (TLS) 1.2 or higher. "
-                + "This then allows a sending email service to safely enforce encryption, without the risk of losing emails."
-                + $"{Environment.NewLine}[Further information about MTA-STS](https://www.mailcheck.service.ncsc.gov.uk/app/help/mtasts)";
-
-            SetUpDnsClient("_mta-sts.testDomain.com", "");
-
-            MtaStsRecordsPolled result = null;
-            A.CallTo(() => MessageDispatcher.Dispatch(A<Message>._, A<string>._))
-                .Invokes((Message message, string topic) => { result = (MtaStsRecordsPolled) message; });
-
-            await _pollHandler.Handle(new MtaStsPollPending("testDomain.com"));
-
-            Assert.AreEqual(1, result.AdvisoryMessages.Count);
-
-            AdvisoryMessage advisory = result.AdvisoryMessages[0];
-            Assert.AreEqual(AdvisoryType.Warning, advisory.AdvisoryType);
-            Assert.AreEqual(expectedMarkDown, advisory.MarkDown);
-            Assert.AreEqual("No MTA-STS record configured.", advisory.Text);
-            Assert.AreEqual(MessageDisplay.Standard, advisory.MessageDisplay);
-
-            Assert.AreEqual(0, result.MtaStsRecords.Records.Count);
         }
 
         [Test]
@@ -151,10 +123,33 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             Assert.AreEqual(1, result.AdvisoryMessages.Count);
 
             AdvisoryMessage advisory = result.AdvisoryMessages[0];
-            Assert.AreEqual(AdvisoryType.Error, advisory.AdvisoryType);
+            Assert.AreEqual(MessageType.error, advisory.MessageType);
             Assert.AreEqual(null, advisory.MarkDown);
             Assert.AreEqual("A domain should have only 1 MTA-STS record.", advisory.Text);
             Assert.AreEqual(MessageDisplay.Standard, advisory.MessageDisplay);
+        }
+
+        [Test]
+        public async Task MissingSemicolonTagIsInvalid()
+        {
+            SetUpDnsClient("_mta-sts.testDomain.com", "v=STSv1 id=021120211155");
+
+            MtaStsRecordsPolled result = null;
+            A.CallTo(() => MessageDispatcher.Dispatch(A<Message>._, A<string>._))
+                .Invokes((Message message, string topic) => { result = (MtaStsRecordsPolled)message; });
+
+            await _pollHandler.Handle(new MtaStsPollPending("testDomain.com"));
+
+            Assert.AreEqual(2, result.AdvisoryMessages.Count);
+
+            Assert.AreEqual("mailcheck.mtasts.malformedTag", result.AdvisoryMessages[0].Name);
+            Assert.AreEqual("mailcheck.mtasts.versionTagRequired", result.AdvisoryMessages[1].Name);
+
+            Assert.AreEqual(1, result.MtaStsRecords.Records.Count);
+
+            MtaStsRecord record = result.MtaStsRecords.Records[0];
+            Assert.AreEqual("testDomain.com", record.Domain);
+            Assert.AreEqual(1, record.Tags.Count);
         }
     }
 }

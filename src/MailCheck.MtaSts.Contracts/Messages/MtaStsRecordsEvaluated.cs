@@ -7,7 +7,7 @@ namespace MailCheck.MtaSts.Contracts.Messages
 {
     public class MtaStsRecordsEvaluated : Message
     {
-        public MtaStsRecordsEvaluated(string id, MtaStsRecords records, List<AdvisoryMessage> advisoryMessages, DateTime lastUpdated) : base(id)
+        public MtaStsRecordsEvaluated(string id, MtaStsRecords records, List<MtaStsAdvisoryMessage> advisoryMessages, DateTime lastUpdated) : base(id)
         {
             Records = records;
             AdvisoryMessages = advisoryMessages;
@@ -16,7 +16,7 @@ namespace MailCheck.MtaSts.Contracts.Messages
 
         public MtaStsRecords Records { get; }
 
-        public List<AdvisoryMessage> AdvisoryMessages { get; }
+        public List<MtaStsAdvisoryMessage> AdvisoryMessages { get; }
 
         public DateTime LastUpdated { get; }
     }

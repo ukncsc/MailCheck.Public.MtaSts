@@ -45,13 +45,17 @@ namespace MailCheck.MtaSts.PolicyFetcher.Test.Parsing
             Assert.AreEqual("Mail for this domain may be handled by MX *.mail.protection.outlook.com.", result.Item.Explanation);
         }
 
-        [Test]
-        public void ShouldParseWithErrorOnInvalidMx()
+        [TestCase("mx", "@@@@")]
+        [TestCase("mx", "ncsc-gov-uk.mail.protection.outlook.com.")]
+        [TestCase("mx", "ncsc-gov-uk.mail.protection.outlook.com ")]
+        [TestCase("mx", " ncsc-gov-uk.mail.protection.outlook.com")]
+        [TestCase("mx", "*.protection.outlook.com ")]
+        [TestCase("mx", " *.protection.outlook.com")]
+        public void ShouldParseWithErrorOnInvalidMx(string key, string value)
         {
-            string line = "mx: @@@@";
             List<Key> keys = new List<Key>();
 
-            EvaluationResult<Key> result = _mxParser.Parse(keys, line, "mx", "@@@@");
+            EvaluationResult<Key> result = _mxParser.Parse(keys, null, key, value);
 
             Assert.AreEqual(1, result.AdvisoryMessages.Count);
             Assert.AreEqual("Invalid mx key.", result.AdvisoryMessages[0].Text);
@@ -59,7 +63,7 @@ namespace MailCheck.MtaSts.PolicyFetcher.Test.Parsing
                 "by a wildcard (\"*.example.net\"). If a policy specifies more than one MX, each MX MUST have its " +
                 "own \"mx:\" key, and each MX key/value pair MUST be on its own line in the policy file.", result.AdvisoryMessages[0].MarkDown);
             Assert.AreEqual("MxKey", result.Item.Type);
-            Assert.AreEqual("@@@@ is in an invalid host format.", result.Item.Explanation);
+            Assert.AreEqual($"{value} is in an invalid host format.", result.Item.Explanation);
         }
     }
 }

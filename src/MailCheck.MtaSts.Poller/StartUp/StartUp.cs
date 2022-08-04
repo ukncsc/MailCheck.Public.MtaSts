@@ -3,6 +3,7 @@ using MailCheck.Common.Environment.Abstractions;
 using MailCheck.Common.Environment.Implementations;
 using MailCheck.Common.Messaging.Abstractions;
 using MailCheck.Common.Processors.Evaluators;
+using MailCheck.Common.Util;
 using MailCheck.MtaSts.Contracts;
 using MailCheck.MtaSts.Poller.Config;
 using MailCheck.MtaSts.Poller.Dns;
@@ -38,6 +39,7 @@ namespace MailCheck.MtaSts.Poller.StartUp
             services
                 .AddSingleton<IAmazonSimpleNotificationService, AmazonSimpleNotificationServiceClient>()
                 .AddTransient<PollHandler>()
+                .AddTransient<IAuditTrailParser, AuditTrailParser>()
                 .AddTransient<IMtaStsProcessor, MtaStsProcessor>()
                 .AddTransient<IDnsClient, Dns.DnsClient>()
                 .AddTransient<IMtaStsPollerConfig, MtaStsPollerConfig>()
@@ -52,7 +54,6 @@ namespace MailCheck.MtaSts.Poller.StartUp
                 .AddTransient<IMtaStsRecordsEvaluator, MtaStsRecordsEvaluator>()
                 .AddTransient<IEvaluator<MtaStsRecords>, Evaluator<MtaStsRecords>>()
                 .AddTransient<IEvaluator<MtaStsRecord>, Evaluator<MtaStsRecord>>()
-                .AddTransient<IRule<MtaStsRecords>, NoMtaStsRecord>()
                 .AddTransient<IRule<MtaStsRecords>, OnlyOneMtaStsRecord>()
                 .AddTransient<IRule<MtaStsRecord>, VersionTagIsRequired>()
                 .AddLookupClient();

@@ -41,7 +41,7 @@ namespace MailCheck.MtaSts.Poller
             if (mtaStsRecordInfos.HasError)
             {
                 string message = $"Failed MTA-STS record query for {domain} with error {mtaStsRecordInfos.AdvisoryMessage.Text}";
-                _log.LogError($"{message} {Environment.NewLine} Audit Trail: {mtaStsRecordInfos.AuditTrail}");
+                _log.LogInformation($"{message} {Environment.NewLine} Audit Trail: {mtaStsRecordInfos.AuditTrail}");
                 return new MtaStsPollResult(domain, mtaStsRecordInfos.AdvisoryMessage);
             }
 

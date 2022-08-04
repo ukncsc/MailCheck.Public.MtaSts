@@ -5,6 +5,7 @@ using System.Linq;
 using MailCheck.Common.Contracts.Advisories;
 using MailCheck.Common.Processors.Evaluators;
 using MailCheck.MtaSts.Contracts.Keys;
+using MailCheck.MtaSts.Contracts.Messages;
 using MailCheck.MtaSts.Contracts.PolicyFetcher;
 using MailCheck.MtaSts.PolicyFetcher.Domain.Errors;
 using Microsoft.Extensions.Logging;
@@ -29,6 +30,8 @@ namespace MailCheck.MtaSts.PolicyFetcher.Parsing
 
         public MtaStsPolicyResult Parse(string domain, string responseBody, List<AdvisoryMessage> errors)
         {
+            errors ??= new List<AdvisoryMessage>();
+
             if (string.IsNullOrWhiteSpace(responseBody))
             {
                 if (!errors.Any())
@@ -36,7 +39,7 @@ namespace MailCheck.MtaSts.PolicyFetcher.Parsing
                     errors.Add(new NoPolicyError());
                 }
                 
-                return new MtaStsPolicyResult(responseBody, new List<Key>(), errors);
+                return new MtaStsPolicyResult(responseBody, new List<Key>(), errors.OfType<MtaStsAdvisoryMessage>().ToList());
             }
 
             List<Key> keys = new List<Key>();
@@ -50,7 +53,7 @@ namespace MailCheck.MtaSts.PolicyFetcher.Parsing
                     {
                         List<string> keyParts = (line.Split(":")).ToList();
 
-                        if (keyParts.Count() == 2)
+                        if (keyParts.Count == 2)
                         {
                             string keyKey = keyParts[0];
                             string keyValue = keyParts[1].Trim();
@@ -90,7 +93,7 @@ namespace MailCheck.MtaSts.PolicyFetcher.Parsing
                 errors.Add(new FailedToParse());
             }
 
-            return new MtaStsPolicyResult(responseBody, keys, errors);
+            return new MtaStsPolicyResult(responseBody, keys, errors.OfType<MtaStsAdvisoryMessage>().ToList());
         }
     }
 }

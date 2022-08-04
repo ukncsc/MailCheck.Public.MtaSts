@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using DnsClient;
 using MailCheck.Common.Messaging.Abstractions;
+using MailCheck.Common.Messaging.Common.Exception;
 using MailCheck.MtaSts.Contracts.Messages;
 using MailCheck.MtaSts.Poller.Config;
 using MailCheck.MtaSts.Poller.Domain;
@@ -32,13 +35,19 @@ namespace MailCheck.MtaSts.Poller
             {
                 MtaStsPollResult mtaStsPollResult = await _processor.Process(message.Id);
 
-                MtaStsRecordsPolled mtaStsRecordsPolled = new MtaStsRecordsPolled(mtaStsPollResult.Id, message.MessageId, mtaStsPollResult.MtaStsRecords, mtaStsPollResult.AdvisoryMessages);
+                MtaStsRecordsPolled mtaStsRecordsPolled = new MtaStsRecordsPolled(mtaStsPollResult.Id, message.MessageId, mtaStsPollResult.MtaStsRecords, mtaStsPollResult.AdvisoryMessages.OfType<MtaStsAdvisoryMessage>().ToList());
 
                 _dispatcher.Dispatch(mtaStsRecordsPolled, _config.SnsTopicArn);
             }
+            catch (DnsResponseException ex) when (ex.Code == DnsResponseCode.ConnectionTimeout)
+            {
+                string error = $"ConnectionTimeout occurred polling domain {message.Id}";
+                _log.LogWarning(ex, error);
+                throw new MailCheckException(error);
+            }
             catch (Exception e)
             {
-                string error = $"Error occurred polling domain {message.Id}";
+                string error = $"Unexpected exception occurred polling domain {message.Id}";
                 _log.LogError(e, error);
                 throw;
             }

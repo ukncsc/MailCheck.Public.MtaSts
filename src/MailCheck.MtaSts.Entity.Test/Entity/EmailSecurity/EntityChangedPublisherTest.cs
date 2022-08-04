@@ -49,7 +49,7 @@ namespace MailCheck.MtaSts.Entity.Test.Entity
                 new MaxAgeKey("86400", "max_age: 86400")
             };
 
-            MtaStsPolicyResult stateResult = new MtaStsPolicyResult(stateRawValue, stateKeys, new List<AdvisoryMessage>());
+            MtaStsPolicyResult stateResult = new MtaStsPolicyResult(stateRawValue, stateKeys, new List<MtaStsAdvisoryMessage>());
 
             MtaStsEntityState state = new MtaStsEntityState("test.gov.uk", 2, MtaStsState.Evaluated, DateTime.UtcNow)
             {

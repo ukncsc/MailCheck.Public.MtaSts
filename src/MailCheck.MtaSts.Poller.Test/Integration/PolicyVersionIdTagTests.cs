@@ -68,7 +68,7 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             Assert.AreEqual(1, result.AdvisoryMessages.Count);
 
             AdvisoryMessage advisory = result.AdvisoryMessages[0];
-            Assert.AreEqual(AdvisoryType.Error, advisory.AdvisoryType);
+            Assert.AreEqual(MessageType.error, advisory.MessageType);
             Assert.AreEqual(null, advisory.MarkDown);
             Assert.AreEqual("Invalid id. The value must be between 1 and 32 alphanumeric characters", advisory.Text);
             Assert.AreEqual(MessageDisplay.Standard, advisory.MessageDisplay);
@@ -79,5 +79,29 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             Assert.AreEqual("testDomain.com", record.Domain);
             Assert.AreEqual(2, record.Tags.Count);
         }
+
+        [Test]
+        public async Task InvalidPolicyVersionMissingSemicolon()
+        {
+            SetUpDnsClient("_mta-sts.testDomain.com", "v=STSv1 id=021120211155");
+
+            MtaStsRecordsPolled result = null;
+            A.CallTo(() => MessageDispatcher.Dispatch(A<Message>._, A<string>._))
+                .Invokes((Message message, string topic) => { result = (MtaStsRecordsPolled)message; });
+
+            await _pollHandler.Handle(new MtaStsPollPending("testDomain.com"));
+
+            Assert.AreEqual(2, result.AdvisoryMessages.Count);
+
+            Assert.AreEqual("mailcheck.mtasts.malformedTag", result.AdvisoryMessages[0].Name);
+            Assert.AreEqual("mailcheck.mtasts.versionTagRequired", result.AdvisoryMessages[1].Name);
+
+            Assert.AreEqual(1, result.MtaStsRecords.Records.Count);
+
+            MtaStsRecord record = result.MtaStsRecords.Records[0];
+            Assert.AreEqual("testDomain.com", record.Domain);
+            Assert.AreEqual(1, record.Tags.Count);
+        }
+
     }
 }

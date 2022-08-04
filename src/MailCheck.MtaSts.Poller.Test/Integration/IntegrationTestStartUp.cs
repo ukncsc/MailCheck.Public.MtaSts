@@ -2,7 +2,6 @@
 using System.Linq;
 using MailCheck.Common.Logging;
 using MailCheck.Common.Messaging.Abstractions;
-using MailCheck.Common.Messaging.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MailCheck.MtaSts.Poller.Test.Integration
@@ -20,7 +19,6 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
         {
             base.ConfigureServices(services);
             services
-                .AddConcreateHandlers()
                 .AddSerilogLogging();
 
             foreach (ServiceDescriptor fakeService in _fakeServices)

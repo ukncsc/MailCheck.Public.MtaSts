@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MailCheck.Common.Contracts.Advisories;
 using MailCheck.Common.Messaging.Abstractions;
 
 namespace MailCheck.MtaSts.Entity.Entity.Notifications

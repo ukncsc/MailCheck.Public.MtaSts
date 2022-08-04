@@ -35,19 +35,26 @@ namespace MailCheck.MtaSts.Poller.Dns
             string queryText = $"_mta-sts.{domain}";
             QueryType queryType = QueryType.TXT;
 
-            IDnsQueryResponse response = await _lookupClient.QueryAsync(queryText, queryType);
-
-            List<MtaStsRecordInfo> mtaStsRecordInfos = response.Answers.OfType<TxtRecord>()
-                .Where(x => x.Text.FirstOrDefault()?.StartsWith("v=STSv", StringComparison.OrdinalIgnoreCase) ?? false)
-                .Select(x => new MtaStsRecordInfo(domain, x.Text.Select(r => r.Escape()).ToList()))
-                .ToList();
-
-            if (response.HasError && response.ErrorMessage != NonExistentDomainError && response.ErrorMessage != ServerFailureError)
+            try
             {
-                return new MtaStsRecordInfos(domain, new FailedPollError(response.ErrorMessage), response.MessageSize, response.NameServer?.ToString(), response.AuditTrail);
-            }
+                IDnsQueryResponse response = await _lookupClient.QueryAsync(queryText, queryType);
 
-            return new MtaStsRecordInfos(domain, mtaStsRecordInfos, response.MessageSize);
+                List<MtaStsRecordInfo> mtaStsRecordInfos = response.Answers.OfType<TxtRecord>()
+                    .Where(x => x.Text.FirstOrDefault()?.StartsWith("v=STSv", StringComparison.OrdinalIgnoreCase) ?? false)
+                    .Select(x => new MtaStsRecordInfo(domain, x.Text.Select(r => r.Escape()).ToList()))
+                    .ToList();
+
+                if (response.HasError && response.ErrorMessage != NonExistentDomainError && response.ErrorMessage != ServerFailureError)
+                {
+                    return new MtaStsRecordInfos(domain, new FailedPollError(response.ErrorMessage), response.MessageSize, response.NameServer?.ToString(), response.AuditTrail);
+                }
+
+                return new MtaStsRecordInfos(domain, mtaStsRecordInfos, response.MessageSize);
+            }
+            catch(DnsResponseException dnsException) when (dnsException.Code == DnsResponseCode.NotExistentDomain || dnsException.Code == DnsResponseCode.ServerFailure)
+            {
+                return new MtaStsRecordInfos(domain, new List<MtaStsRecordInfo>(), 0);
+            }
         }
     }
 }

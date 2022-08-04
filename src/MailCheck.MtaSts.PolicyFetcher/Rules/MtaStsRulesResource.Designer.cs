@@ -61,16 +61,34 @@ namespace MailCheck.MtaSts.PolicyFetcher.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Policy max age is too short.
+        ///   Looks up a localized string similar to No MX patterns were found in your policy file..
         /// </summary>
-        internal static string PolicyMaxAgeIsTooShort {
+        internal static string NoMxPresent {
             get {
-                return ResourceManager.GetString("PolicyMaxAgeIsTooShort", resourceCulture);
+                return ResourceManager.GetString("NoMxPresent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only an MTA-STS policy of enforce will ensure that emails are delivered to your domain securely from compatible providers..
+        ///   Looks up a localized string similar to MTA-STS policy max_age value is too short (less than 2 weeks). We recommend a longer cache period to protect against sustained attacks..
+        /// </summary>
+        internal static string PolicyMaxAgeIsTooShortEnforceMode {
+            get {
+                return ResourceManager.GetString("PolicyMaxAgeIsTooShortEnforceMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MTA-STS policy max_age value is too short (less than 86400)..
+        /// </summary>
+        internal static string PolicyMaxAgeIsTooShortTestingMode {
+            get {
+                return ResourceManager.GetString("PolicyMaxAgeIsTooShortTestingMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weak MTA-STS policy. TLS email encryption is vulnerable to downgrade attacks. Next step: work towards an MTA-STS ‘enforce’ policy..
         /// </summary>
         internal static string PolicyNotEnforced {
             get {

@@ -11,24 +11,25 @@ using NUnit.Framework;
 namespace MailCheck.MtaSts.PolicyFetcher.Test.Rules
 {
     [TestFixture]
-    public class MtaStsShouldBeEnforcedTests
+    public class MxShouldBePresentTests
     {
-        private MtaStsShouldBeEnforced _rule;
+        private MxShouldBePresent _rule;
 
         [SetUp]
         public void SetUp()
         {
-            _rule = new MtaStsShouldBeEnforced();
+            _rule = new MxShouldBePresent();
         }
 
         [Test]
-        public async Task NoErrorWhenPolicyEnforced()
+        public async Task NoErrorWhenMxIsPresent()
         {
-            MtaStsPolicyResult result = new MtaStsPolicyResult("version: STSv1 mode: enforce",
+            MtaStsPolicyResult result = new MtaStsPolicyResult("version: STSv1 mode: enforce mx: test.host.com",
                 new List<Key>
                 {
                     new VersionKey("STSv1", "version: STSv1"),
-                    new ModeKey("enforce", "mode: enforce")
+                    new ModeKey("enforce", "mode: enforce"),
+                    new MxKey("test.host.com", "mx: test.host.com")
                 }, new List<MtaStsAdvisoryMessage>());
 
             var results = await _rule.Evaluate(result);
@@ -36,7 +37,7 @@ namespace MailCheck.MtaSts.PolicyFetcher.Test.Rules
         }
 
         [Test]
-        public async Task ErrorWhenPolicyEnforced()
+        public async Task ErrorWhenNoMxInPolicy()
         {
             MtaStsPolicyResult result = new MtaStsPolicyResult("version: STSv1 mode: testing",
                 new List<Key>

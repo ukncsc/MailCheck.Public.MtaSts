@@ -19,7 +19,7 @@
         <value>Please ensure the MTA-STS policy file adheres to the format outlined in the following RFC: https://tools.ietf.org/html/rfc8461#section-3.2.</value>
     </data>
     <data name="KeyValueErrorMarkdown" xml:space="preserve">
-        <value>Line {1} found in policy, please ensure it adheres to the the format outlined in the following RFC: https://tools.ietf.org/html/rfc8461#section-3.2.</value>
+        <value>Line {0} found in policy, please ensure it adheres to the the format outlined in the following RFC: https://tools.ietf.org/html/rfc8461#section-3.2.</value>
     </data>
     <data name="ModeKeyErrorMarkdown" xml:space="preserve">
         <value>The mode key must be one of "enforce", "testing", or "none".</value>

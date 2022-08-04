@@ -22,12 +22,9 @@ namespace MailCheck.MtaSts.Evaluator.StartUp
 
             services
                 .AddTransient<IHandle<MtaStsRecordsPolled>, EvaluationHandler>()
-                .AddTransient<IMtaStsEvaluationProcessor, MtaStsEvaluationProcessor>()
                 .AddTransient<ITagExplainer, VersionTagExplainer>()
                 .AddTransient<ITagExplainer, PolicyVersionIdTagExplainer>()
                 .AddTransient<IMtaStsRecordExplainer, MtaStsRecordExplainer>()
-                
-                .AddTransient<IEvaluator<MtaStsRecord>, Evaluator<MtaStsRecord>>()
                 .AddTransient<IAmazonSimpleNotificationService, AmazonSimpleNotificationServiceClient>()
                 .AddTransient<IMtaStsEvaluatorConfig, MtaStsEvaluatorConfig>()
                 .AddSingleton<IAmazonSimpleSystemsManagement, CachingAmazonSimpleSystemsManagementClient>()

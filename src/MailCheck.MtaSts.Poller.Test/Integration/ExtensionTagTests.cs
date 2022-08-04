@@ -64,7 +64,7 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             Assert.AreEqual(1, result.AdvisoryMessages.Count);
 
             AdvisoryMessage advisory = result.AdvisoryMessages[0];
-            Assert.AreEqual(AdvisoryType.Error, advisory.AdvisoryType);
+            Assert.AreEqual(MessageType.error, advisory.MessageType);
             Assert.AreEqual("Please refer to SMTP MTA Strict Transport Security [RFC](https://tools.ietf.org/html/rfc8461#section-3.1)", advisory.MarkDown);
             Assert.AreEqual("Invalid tag key", advisory.Text);
             Assert.AreEqual(MessageDisplay.Standard, advisory.MessageDisplay);
@@ -90,7 +90,7 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             Assert.AreEqual(1, result.AdvisoryMessages.Count);
 
             AdvisoryMessage advisory = result.AdvisoryMessages[0];
-            Assert.AreEqual(AdvisoryType.Error, advisory.AdvisoryType);
+            Assert.AreEqual(MessageType.error, advisory.MessageType);
             Assert.AreEqual("Please refer to SMTP MTA Strict Transport Security [RFC](https://tools.ietf.org/html/rfc8461#section-3.1)", advisory.MarkDown);
             Assert.AreEqual("Invalid tag value", advisory.Text);
             Assert.AreEqual(MessageDisplay.Standard, advisory.MessageDisplay);

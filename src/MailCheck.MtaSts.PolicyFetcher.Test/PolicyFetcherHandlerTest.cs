@@ -45,7 +45,7 @@ namespace MailCheck.MtaSts.PolicyFetcher.Test
             VersionKey versionKey = new VersionKey("STSv1", "version: STSv1");
 
             List<Key> keys = new List<Key>() { mxKey, modeKey, maxAgeKey, versionKey };
-            MtaStsPolicyResult result = new MtaStsPolicyResult(policy, keys, new List<AdvisoryMessage>());
+            MtaStsPolicyResult result = new MtaStsPolicyResult(policy, keys, new List<MtaStsAdvisoryMessage>());
             A.CallTo(() => _policyFetcher.Process("ncsc.gov.uk")).Returns(result);
             A.CallTo(() => _mtaStsPolicyFetcherConfig.SnsTopicArn).Returns("testSnsTopicArn");
 

@@ -5,6 +5,6 @@ namespace MailCheck.MtaSts.Entity.Entity.Notifiers
 {
     public interface IChangeNotifier
     {
-        void Handle(string domain, List<AdvisoryMessage> currentMessages, List<AdvisoryMessage> newMessages);
+        void Handle(string domain, IEnumerable<AdvisoryMessage> currentMessages, IEnumerable<AdvisoryMessage> newMessages);
     }
 }

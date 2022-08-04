@@ -117,10 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PolicyMaxAgeIsTooShort" xml:space="preserve">
-    <value>Policy max age is too short</value>
+  <data name="PolicyMaxAgeIsTooShortEnforceMode" xml:space="preserve">
+    <value>MTA-STS policy max_age value is too short (less than 2 weeks). We recommend a longer cache period to protect against sustained attacks.</value>
+  </data>
+  <data name="PolicyMaxAgeIsTooShortTestingMode" xml:space="preserve">
+    <value>MTA-STS policy max_age value is too short (less than 86400).</value>
   </data>
   <data name="PolicyNotEnforced" xml:space="preserve">
-    <value>Only an MTA-STS policy of enforce will ensure that emails are delivered to your domain securely from compatible providers.</value>
+    <value>Weak MTA-STS policy. TLS email encryption is vulnerable to downgrade attacks. Next step: work towards an MTA-STS ‘enforce’ policy.</value>
+  </data>
+  <data name="NoMxPresent" xml:space="preserve">
+    <value>No MX patterns were found in your policy file.</value>
   </data>
 </root>

@@ -45,7 +45,8 @@ namespace MailCheck.MtaSts.PolicyFetcher.StartUp
                 .AddTransient<IKeyParser, VersionParser>()
                 .AddTransient<IEvaluator<MtaStsPolicyResult>, Evaluator<MtaStsPolicyResult>>()
                 .AddTransient<IRule<MtaStsPolicyResult>, MtaStsShouldBeEnforced>()
-                .AddTransient<IRule<MtaStsPolicyResult>, MaxAgeStrongKeyRule>();
+                .AddTransient<IRule<MtaStsPolicyResult>, MaxAgeStrongKeyRule>()
+                .AddTransient<IRule<MtaStsPolicyResult>, MxShouldBePresent>();
         }
     }
 }

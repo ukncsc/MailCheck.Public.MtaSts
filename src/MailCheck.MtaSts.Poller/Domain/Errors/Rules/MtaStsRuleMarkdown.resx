@@ -119,7 +119,7 @@
   </resheader>
   <data name="NoMtsStsError" xml:space="preserve">
     <value>Mail Transfer Agent Strict Transport Security (MTA-STS) is a protocol that allows a domain to advertise the capability to receive emails using Transport Layer Security (TLS) 1.2 or higher. This then allows a sending email service to safely enforce encryption, without the risk of losing emails.
-[Further information about MTA-STS](https://www.mailcheck.service.ncsc.gov.uk/app/help/mtasts)</value>
+[Further information about MTA-STS](https://www.ncsc.gov.uk/collection/email-security-and-anti-spoofing/using-mta-sts-to-protect-the-privacy-of-your-emails)</value>
   </data>
   <data name="OnlyOneMtaStsRecordError" xml:space="preserve">
     <value>A domain should have only 1 MTA-STS record.</value>

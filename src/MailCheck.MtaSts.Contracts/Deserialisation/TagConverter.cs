@@ -23,6 +23,8 @@ namespace MailCheck.MtaSts.Contracts.Deserialisation
                     return JsonConvert.DeserializeObject<VersionTag>(jo.ToString());
                 case "extensiontag":
                     return JsonConvert.DeserializeObject<ExtensionTag>(jo.ToString());
+                case "malformedtag":
+                    return JsonConvert.DeserializeObject<MalformedTag>(jo.ToString());
                 default:
                     throw new InvalidOperationException($"Failed to convert type of {tagType}.");
             }

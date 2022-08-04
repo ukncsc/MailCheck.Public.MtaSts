@@ -121,7 +121,7 @@
     <value>A domain should have only 1 MTA-STS record.</value>
   </data>
   <data name="NoMtsStsError" xml:space="preserve">
-    <value>No MTA-STS record configured.</value>
+    <value>MTA-STS not configured. TLS email encryption is vulnerable to downgrade attacks. First step: set up an MTA-STS ‘testing’ policy.</value>
   </data>
   <data name="VersionRequiredError" xml:space="preserve">
     <value>Version required. MTA-STS record must start with v=STSv1;.</value>

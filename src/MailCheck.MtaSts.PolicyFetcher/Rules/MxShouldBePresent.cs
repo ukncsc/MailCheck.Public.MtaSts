@@ -10,26 +10,26 @@ using MailCheck.MtaSts.Contracts.PolicyFetcher;
 
 namespace MailCheck.MtaSts.PolicyFetcher.Rules
 {
-    public class MtaStsShouldBeEnforced : IRule<MtaStsPolicyResult>
+    public class MxShouldBePresent : IRule<MtaStsPolicyResult>
     {
-        public Guid Id = new Guid("5D35C65E-D853-43EF-B1DA-F3473603200B");
+        public Guid Id = new Guid("ac60b693-3511-4886-a2bd-f9ce3c7d98a7");
 
         public Task<List<AdvisoryMessage>> Evaluate(MtaStsPolicyResult item)
         {
-            ModeKey modeKey = item.Keys.OfType<ModeKey>().FirstOrDefault();
+            List<MxKey> mxKeys = item.Keys.OfType<MxKey>().ToList();
 
             List<AdvisoryMessage> messages = new List<AdvisoryMessage>();
 
-            if (modeKey?.Value != null && !modeKey.Value.ToLower().Equals("enforce"))
+            if (mxKeys?.Count == 0)
             {
-                messages.Add(new MtaStsAdvisoryMessage(Id, "mailcheck.mtasts.policyNotEnforced", MessageType.warning, MtaStsRulesResource.PolicyNotEnforced,
-                    MtaStsRulesMarkDownResource.PolicyNotEnforced));
+                messages.Add(new MtaStsAdvisoryMessage(Id, "mailcheck.mtasts.noMxPresent", MessageType.error, MtaStsRulesResource.NoMxPresent,
+                    MtaStsRulesMarkDownResource.NoMxPresent));
             }
 
             return Task.FromResult(messages);
         }
 
-        public int SequenceNo => 1;
+        public int SequenceNo => 3;
         public bool IsStopRule => false;
     }
 }

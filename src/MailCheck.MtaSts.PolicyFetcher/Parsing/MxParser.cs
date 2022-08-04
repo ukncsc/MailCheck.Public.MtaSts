@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MailCheck.Common.Contracts.Advisories;
 using MailCheck.Common.Processors.Evaluators;
 using MailCheck.MtaSts.Contracts.Keys;
@@ -15,10 +14,9 @@ namespace MailCheck.MtaSts.PolicyFetcher.Parsing
             MxKey mxKey = new MxKey(value, line);
             List<AdvisoryMessage> errors = new List<AdvisoryMessage>();
 
-            int keyInstanceCount = keys.Count(x => x.GetType() == typeof(MxKey));
             string trimmedValue = value;
             if (value.StartsWith("*.")) trimmedValue = value.Remove(0, 2);
-            if (!(Uri.CheckHostName(trimmedValue) != UriHostNameType.Unknown))
+            if (trimmedValue.EndsWith(".") || Uri.CheckHostName(trimmedValue) == UriHostNameType.Unknown)
             {
                 errors.Add(new InvalidMxKeyError());
                 mxKey.Explanation = string.Format(Explanations.MxKeyInvalidExplanation, value);

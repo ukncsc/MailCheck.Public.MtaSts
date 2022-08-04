@@ -24,7 +24,7 @@ namespace MailCheck.MtaSts.Entity.Entity.Notifiers
             _log = log;
         }
 
-        public void Handle(string domain, List<AdvisoryMessage> currentMessages, List<AdvisoryMessage> newMessages)
+        public void Handle(string domain, IEnumerable<AdvisoryMessage> currentMessages, IEnumerable<AdvisoryMessage> newMessages)
         {
             currentMessages = currentMessages ?? new List<AdvisoryMessage>();
             newMessages = newMessages ?? new List<AdvisoryMessage>();
@@ -35,7 +35,7 @@ namespace MailCheck.MtaSts.Entity.Entity.Notifiers
             {
                 MtaStsAdvisoryAdded advisoryAdded = new MtaStsAdvisoryAdded(
                     domain,
-                    addedMessages.Select(_ => new Notifications.AdvisoryMessage((MessageType) _.AdvisoryType, _.Text)).ToList());
+                    addedMessages);
                 _dispatcher.Dispatch(advisoryAdded, _mtaStsEntityConfig.SnsTopicArn);
             }
 
@@ -45,7 +45,7 @@ namespace MailCheck.MtaSts.Entity.Entity.Notifiers
             {
                 MtaStsAdvisoryRemoved advisoryRemoved = new MtaStsAdvisoryRemoved(
                     domain,
-                    removedMessages.Select(_ => new Notifications.AdvisoryMessage((MessageType)_.AdvisoryType, _.Text)).ToList());
+                    removedMessages);
                 _dispatcher.Dispatch(advisoryRemoved, _mtaStsEntityConfig.SnsTopicArn);
             }
 
@@ -55,7 +55,7 @@ namespace MailCheck.MtaSts.Entity.Entity.Notifiers
             {
                 MtaStsAdvisorySustained advisorySustained = new MtaStsAdvisorySustained(
                     domain,
-                    sustainedMessages.Select(_ => new Notifications.AdvisoryMessage((MessageType)_.AdvisoryType, _.Text)).ToList());
+                    sustainedMessages);
                 _dispatcher.Dispatch(advisorySustained, _mtaStsEntityConfig.SnsTopicArn);
             }
         }

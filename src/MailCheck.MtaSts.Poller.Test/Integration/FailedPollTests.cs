@@ -37,7 +37,7 @@ namespace MailCheck.MtaSts.Poller.Test.Integration
             Assert.AreEqual(1, result.AdvisoryMessages.Count);
 
             AdvisoryMessage advisory = result.AdvisoryMessages[0];
-            Assert.AreEqual(AdvisoryType.Error, advisory.AdvisoryType);
+            Assert.AreEqual(MessageType.error, advisory.MessageType);
             Assert.AreEqual(null, advisory.MarkDown);
             Assert.AreEqual("Error Message", advisory.Text);
             Assert.AreEqual(MessageDisplay.Standard, advisory.MessageDisplay);

@@ -9,6 +9,7 @@ using MailCheck.Common.Environment.Abstractions;
 using MailCheck.Common.Environment.FeatureManagement;
 using MailCheck.Common.Environment.Implementations;
 using MailCheck.Common.Messaging.Abstractions;
+using MailCheck.Common.Processors.Notifiers;
 using MailCheck.Common.SSM;
 using MailCheck.Common.Util;
 using MailCheck.MtaSts.Entity.Config;
@@ -18,6 +19,9 @@ using MailCheck.MtaSts.Entity.Entity.EmailSecurity;
 using MailCheck.MtaSts.Entity.Entity.Notifiers;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using FindingsChangedNotifier = MailCheck.Common.Processors.Notifiers.FindingsChangedNotifier;
+using LocalFindingsChangedNotifier = MailCheck.MtaSts.Entity.Entity.Notifiers.FindingsChangedNotifier;
+using MessageEqualityComparer = MailCheck.MtaSts.Entity.Entity.Notifiers.MessageEqualityComparer;
 
 namespace MailCheck.MtaSts.Entity.StartUp
 {
@@ -39,17 +43,11 @@ namespace MailCheck.MtaSts.Entity.StartUp
                 .AddSingleton<IMtaStsEntityDao, MtaStsEntityDao>()
                 .AddTransient<IEntityChangedPublisher, EntityChangedPublisher>()
                 .AddTransient<IChangeNotifier, AdvisoryChangedNotifier>()
+                .AddTransient<IChangeNotifier, LocalFindingsChangedNotifier>()
+                .AddTransient<IChangeNotifiersComposite, ChangeNotifiersComposite>()
+                .AddTransient<IFindingsChangedNotifier, FindingsChangedNotifier>()
                 .AddTransient<IEqualityComparer<AdvisoryMessage>, MessageEqualityComparer>()
-                .AddConditionally(
-                    "NewScheduler",
-                    featureActiveRegistrations =>
-                    {
-                        featureActiveRegistrations.AddTransient<MtaStsEntityNewScheduler>();
-                    },
-                    featureInactiveRegistrations =>
-                    {
-                        featureInactiveRegistrations.AddTransient<MtaStsEntity>();
-                    });
+                .AddTransient<MtaStsEntity>();
         }
     }
 }

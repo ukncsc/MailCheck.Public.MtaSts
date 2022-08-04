@@ -101,12 +101,12 @@ namespace MailCheck.MtaSts.Entity.Test.Entity.Notifiers
 
         private static IEnumerable<AdvisoryChangedNotifierTestCase> ExerciseEqualityComparersTestPermutations()
         {
-            AdvisoryMessage error1 = new AdvisoryMessage(errorId1, AdvisoryType.Error, "test", "test");
-            AdvisoryMessage error2 = new AdvisoryMessage(errorId2, AdvisoryType.Error, "test", "test");
-            AdvisoryMessage warning1 = new AdvisoryMessage(warningId1, AdvisoryType.Warning, "test", "test");
-            AdvisoryMessage warning2 = new AdvisoryMessage(warningId2, AdvisoryType.Warning, "test", "test");
-            AdvisoryMessage info1 = new AdvisoryMessage(infoId1, AdvisoryType.Info, "test", "test");
-            AdvisoryMessage info2 = new AdvisoryMessage(infoId2, AdvisoryType.Info, "test", "test");
+            AdvisoryMessage error1 = new AdvisoryMessage(errorId1, MessageType.error, "test", "test");
+            AdvisoryMessage error2 = new AdvisoryMessage(errorId2, MessageType.error, "test", "test");
+            AdvisoryMessage warning1 = new AdvisoryMessage(warningId1, MessageType.warning, "test", "test");
+            AdvisoryMessage warning2 = new AdvisoryMessage(warningId2, MessageType.warning, "test", "test");
+            AdvisoryMessage info1 = new AdvisoryMessage(infoId1, MessageType.info, "test", "test");
+            AdvisoryMessage info2 = new AdvisoryMessage(infoId2, MessageType.info, "test", "test");
 
             AdvisoryChangedNotifierTestCase test1 = new AdvisoryChangedNotifierTestCase
             {
